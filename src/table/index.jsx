@@ -10,6 +10,7 @@ const TablePage = () => {
   const [access, setAccess] = useState(false)
   const [userPage, setUserPage] = useState(true)
   const [emailPage, setEmailPage] = useState(false)
+  const [emailSendPage, setEmailSendPage] = useState(false)
   const [smsPage, setSmsPage] = useState(false)
   const [memberPage, setMemberPage] = useState(false)
   const [subPage, setSubPage] = useState(false)
@@ -71,18 +72,30 @@ const onPayment = () => {
   setEmailPage(false)
   setSmsPage(false)
   setMemberPage(false)
+  setEmailSendPage(false)
 };
 const onEmail = () => {
   setUserPage(false)
   setEmailPage(true)
   setSmsPage(false)
   setMemberPage(false)
+  setEmailSendPage(false)
+};
+const onSend = () => {
+  setUserPage(false)
+  setEmailSendPage(true)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setSubPage(false)
+
 };
 const onSms = () => {
   setUserPage(false)
   setEmailPage(false)
   setSmsPage(true)
   setMemberPage(false)
+  setEmailSendPage(false)
 
 };
 const onMember = () => {
@@ -90,6 +103,7 @@ const onMember = () => {
   setEmailPage(false)
   setSmsPage(false)
   setMemberPage(true)
+  setEmailSendPage(false)
 };
 const onSubscription = () => {
   setUserPage(false)
@@ -97,6 +111,7 @@ const onSubscription = () => {
   setSmsPage(false)
   setMemberPage(false)
   setSubPage(true)
+  setEmailSendPage(false)
 };
 
 // SEARCHING FUNCTION: 
@@ -120,6 +135,7 @@ const priceRef = useRef()
         <BtnBox>
           <Btn onClick={onPayment} style={userPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>결제 내역</Btn>
           <Btn onClick={onEmail} style={emailPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일</Btn>
+          <Btn onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
@@ -256,6 +272,23 @@ const priceRef = useRef()
             </Body>
           ))}
         </BodyWrap>
+      </Main>}
+      {access && emailSendPage &&
+      <Main>
+            <br></br>
+        <form >
+      <label>Name</label>
+      <input type="text" name="user_name" />
+      <br></br>
+      <br></br>
+      <label>Email</label>
+      <input type="email" name="user_email" />
+      <br></br>
+      <br></br>
+      <label>Message</label>
+      <textarea name="message" />
+      <input type="submit" value="Send" />
+    </form>
       </Main>}
     </Container>
   )
