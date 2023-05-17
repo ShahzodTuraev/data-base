@@ -12,6 +12,7 @@ const TablePage = () => {
   const [emailPage, setEmailPage] = useState(false)
   const [smsPage, setSmsPage] = useState(false)
   const [memberPage, setMemberPage] = useState(false)
+  const [subPage, setSubPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   // MAIN PAYMENT USERS INFO DATA :
@@ -41,6 +42,13 @@ const TablePage = () => {
     axios.post('https://api.mever.me:8080/member/list', {
     }).then((data)=>{
       setMemberList(data.data)
+    });
+  }, [])
+  // SUBSCRIPTION DATA :
+   useEffect(()=>{
+    axios.post('https://api.mever.me:8080/subscription/list', {
+    }).then((data)=>{
+      setSubscription(data.data)
     });
   }, [])
 
@@ -82,6 +90,13 @@ const onMember = () => {
   setEmailPage(false)
   setSmsPage(false)
   setMemberPage(true)
+};
+const onSubscription = () => {
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setSubPage(true)
 };
 
 // SEARCHING FUNCTION: 
@@ -211,7 +226,37 @@ const priceRef = useRef()
           ))}
         </BodyWrap>
       </Main>}
-      
+         {/* SUBSCRIPTION LIST */}
+      {access && subPage &&
+      <Main>
+        <Head>
+          <HeadText>이메일</HeadText>
+          <HeadText>전화번호</HeadText>
+          <HeadText>고객명</HeadText>
+          <HeadText>상품명</HeadText>
+          <HeadText>결제기간</HeadText>
+          <HeadText>구독상태</HeadText>
+          <HeadText>구독 시작일</HeadText>
+          <HeadText>다음 결제일</HeadText>
+          <HeadText>결제 활성화</HeadText>
+        </Head>
+        <BodyWrap>
+          {subscription.map((list, index)=>(
+            <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
+              <BodyText>{list.email}</BodyText>
+              <BodyText>{list.phone}</BodyText>
+              <BodyText>{list.name}</BodyText>
+              <BodyText>{list.orderName}</BodyText>
+              <BodyText>{list.period}</BodyText>
+              <BodyText>{list.status}</BodyText>
+              <BodyText>{list.approvedAt}</BodyText>
+              <BodyText>{list.requestedAt}</BodyText>
+              <Btn onClick={onSubscription} style={subPage ? {color: '#fff', background: 'skyblue'} : {color: '#fff'}}>취소</Btn>
+              
+            </Body>
+          ))}
+        </BodyWrap>
+      </Main>}
     </Container>
   )
 }
