@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
-import { Body, BodyText, BodyWrap, Btn, BtnBox, Container, Head, HeadText, LoginBox, LoginBtn, LoginInput, Main } from './style'
+import React, { useState } from 'react'
+import { Btn, BtnBox, Container, LoginBox, LoginBtn, LoginInput } from './style'
+import PaymentList from '../components/PaymentList'
+import EmailList from '../components/EmailList'
+import SmsList from '../components/SmsList'
+import MemberList from '../components/MemberList '
 const TablePage = () => {
-  const [users, setUsers] = useState([])
-  const [emailList, setEmailList] = useState([])
-  const [smsList, setSmsList] = useState([])
-  const [memberList, setMemberList] = useState([])
 // PAGES' DISPLAY STATES : 
   const [access, setAccess] = useState(false)
   const [userPage, setUserPage] = useState(true)
@@ -14,35 +13,9 @@ const TablePage = () => {
   const [memberPage, setMemberPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
-  // MAIN PAYMENT USERS INFO DATA :
-  useEffect(()=>{
-    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {
-    }).then((data)=>{
-      setUsers(data.data)
-    });
-  }, [])
-  console.log(users);
-  // EMAIL SENDING CONTENT DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/send/list?type=mail', {
-    }).then((data)=>{
-      setEmailList(data.data)
-    });
-  }, [])
-  // SMS SENDING CONTENT DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/send/list?type=sms', {
-    }).then((data)=>{
-      setSmsList(data.data)
-    });
-  }, [])
-  // MEMBER DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/member/list', {
-    }).then((data)=>{
-      setMemberList(data.data)
-    });
-  }, [])
+  // SUBSCRIPTION BUTTON STATES :
+
+
 
   // LOGIN PAGE FUNCTIONS:
   const onId = (e) => {
@@ -55,7 +28,6 @@ const TablePage = () => {
   const onSubmit = () => {
     if(id === 'ceo' && password === '1111')setAccess(true)
   }
-
 
 // PAGE BUTTON CONTROL:
 const onPayment = () => {
@@ -84,14 +56,7 @@ const onMember = () => {
   setMemberPage(true)
 };
 
-// SEARCHING FUNCTION: 
-const dateRef = useRef()
-const nameRef = useRef()
-const emailRef = useRef()
-const phoneRef = useRef()
-const survayRef = useRef()
-const productRef = useRef()
-const priceRef = useRef()
+
 
   return (
     <Container>
@@ -108,110 +73,11 @@ const priceRef = useRef()
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
-      }
-      
-      {access && userPage &&
-      
-      <Main>
-        <Head>
-          <HeadText>일자</HeadText>
-          <HeadText>이름</HeadText>
-          <HeadText>이메일</HeadText>
-          <HeadText>전화번호</HeadText>
-          <HeadText>설문 조사 결과</HeadText>
-          <HeadText>상품명</HeadText>
-          <HeadText>상품 가격</HeadText>
-        </Head>
-        <Head>
-          <input ref={dateRef} type="text" />
-          <input ref={nameRef} type="text" />
-          <input ref={emailRef} type="text" />
-          <input ref={phoneRef} type="text" />
-          <input ref={survayRef} type="text" />
-          <input ref={productRef} type="text" />
-          <input ref={priceRef} type="text" />
-        </Head>
-        <BodyWrap>
-          {users.map((user, index)=>(
-            <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
-              <BodyText>{user.approvedAt}</BodyText>
-              <BodyText>{user.name}</BodyText>
-              <BodyText>{user.email}</BodyText>
-              <BodyText>{user.phone}</BodyText>
-              <BodyText>{user.dcrp}</BodyText>
-              <BodyText>{user.orderName}</BodyText>
-              <BodyText>{`${user.totalAmount?user.totalAmount:0}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원</BodyText>
-            </Body>
-          ))}
-        </BodyWrap>
-      </Main>}
-      {/* EMAIL LIST */}
-      {access && emailPage &&
-      <Main>
-        <Head>
-          <HeadText>일자</HeadText>
-          <HeadText>이메일</HeadText>
-          <HeadText>제목</HeadText>
-          <HeadText>내용</HeadText>
-          <HeadText>전화번호</HeadText>
-        </Head>
-        <BodyWrap>
-          {emailList.map((list, index)=>(
-            <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
-              <BodyText>{list.date}</BodyText>
-              <BodyText>{list.email}</BodyText>
-              <BodyText>{list.title}</BodyText>
-              <BodyText>{list.content}</BodyText>
-              <BodyText>{list.phone}</BodyText>
-            </Body>
-          ))}
-        </BodyWrap>
-      </Main>}
-      {/* SMS LIST */}
-      {access && smsPage &&
-      <Main>
-        <Head>
-          <HeadText>일자</HeadText>
-          <HeadText>이메일</HeadText>
-          <HeadText>내용</HeadText>
-          <HeadText>전화번호</HeadText>
-        </Head>
-        <BodyWrap>
-          {smsList.map((list, index)=>(
-            <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
-              <BodyText>{list.date}</BodyText>
-              <BodyText>{list.email}</BodyText>
-              <BodyText>{list.content}</BodyText>
-              <BodyText>{list.phone}</BodyText>
-            </Body>
-          ))}
-        </BodyWrap>
-      </Main>}
-       {/* MEMBER LIST */}
-      {access && memberPage &&
-      <Main>
-        <Head>
-          <HeadText>일자</HeadText>
-          <HeadText>이름</HeadText>
-          <HeadText>이메일</HeadText>
-          <HeadText>전화번호</HeadText>
-          <HeadText>설문 조사 결과</HeadText>
-          <HeadText>내용</HeadText>
-        </Head>
-        <BodyWrap>
-          {memberList.map((list, index)=>(
-            <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
-              <BodyText>2023-05-15 13:45</BodyText>
-              <BodyText>{list.name}</BodyText>
-              <BodyText>{list.email}</BodyText>
-              <BodyText>{list.phone}</BodyText>
-              <BodyText>{list.dcrp}</BodyText>
-              <BodyText>{list.survay}</BodyText>
-            </Body>
-          ))}
-        </BodyWrap>
-      </Main>}
-      
+      } 
+      {access && userPage && <PaymentList/>}
+      {access && emailPage && <EmailList/>}
+      {access && smsPage && <SmsList/>}
+      {access && memberPage && <MemberList/>}
     </Container>
   )
 }
