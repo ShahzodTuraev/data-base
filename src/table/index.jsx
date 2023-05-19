@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios'
-import { Body, BodyText, BodyWrap, Btn, BtnBox, Container, Head, HeadText, LoginBox, LoginBtn, LoginInput, Main } from './style'
+import React, { useState } from 'react'
+import { Btn, BtnBox, Container, LoginBox, LoginBtn, LoginInput } from './style'
+import PaymentList from '../components/PaymentList'
+import EmailList from '../components/EmailList'
+import SmsList from '../components/SmsList'
+import MemberList from '../components/MemberList '
 const TablePage = () => {
-  const [users, setUsers] = useState([])
-  const [emailList, setEmailList] = useState([])
-  const [smsList, setSmsList] = useState([])
-  const [memberList, setMemberList] = useState([])
 // PAGES' DISPLAY STATES : 
   const [access, setAccess] = useState(false)
   const [userPage, setUserPage] = useState(true)
@@ -18,42 +17,9 @@ const TablePage = () => {
   const [subPage, setSubPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
-  // MAIN PAYMENT USERS INFO DATA :
-  useEffect(()=>{
-    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {
-    }).then((data)=>{
-      setUsers(data.data)
-    });
-  }, [])
-  console.log(users);
-  // EMAIL SENDING CONTENT DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/send/list?type=mail', {
-    }).then((data)=>{
-      setEmailList(data.data)
-    });
-  }, [])
-  // SMS SENDING CONTENT DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/send/list?type=sms', {
-    }).then((data)=>{
-      setSmsList(data.data)
-    });
-  }, [])
-  // MEMBER DATA :
-  useEffect(()=>{
-    axios.post('https://api.mever.me:8080/member/list', {
-    }).then((data)=>{
-      setMemberList(data.data)
-    });
-  }, [])
-  // SUBSCRIPTION DATA :
-   useEffect(()=>{
-    axios.post('https://api.mever.me:8080/subscription/list', {
-    }).then((data)=>{
-      setSubscription(data.data)
-    });
-  }, [])
+  // SUBSCRIPTION BUTTON STATES :
+
+
 
   // LOGIN PAGE FUNCTIONS:
   const onId = (e) => {
@@ -66,7 +32,6 @@ const TablePage = () => {
   const onSubmit = () => {
     if(id === 'ceo' && password === '1111')setAccess(true)
   }
-
 
 // PAGE BUTTON CONTROL:
 const onPayment = () => {
@@ -244,14 +209,7 @@ const SmsForm = () => {
   );
 };
 
-// SEARCHING FUNCTION: 
-const dateRef = useRef()
-const nameRef = useRef()
-const emailRef = useRef()
-const phoneRef = useRef()
-const survayRef = useRef()
-const productRef = useRef()
-const priceRef = useRef()
+
 
   return (
     <Container>
@@ -270,6 +228,7 @@ const priceRef = useRef()
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
+<<<<<<< HEAD
       }
       
       {access && userPage &&
@@ -410,6 +369,13 @@ const priceRef = useRef()
       {access && smsSendPage && <Main>
         <SmsForm />
       </Main>}
+=======
+      } 
+      {access && userPage && <PaymentList/>}
+      {access && emailPage && <EmailList/>}
+      {access && smsPage && <SmsList/>}
+      {access && memberPage && <MemberList/>}
+>>>>>>> 5ebc2f433aa290af34e58df535735034f8173f31
     </Container>
   )
 }

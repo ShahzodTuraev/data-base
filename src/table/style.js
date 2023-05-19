@@ -31,6 +31,7 @@ const HeadText = styled.p`
 const Body = styled.div`
 display: flex;
 justify-content: space-around;
+align-items: center;
 
 
 &:hover{
@@ -41,6 +42,8 @@ const BodyText = styled.p`
 font-size: 1rem;
 flex: 1;
 text-align: center;
+display: flex;
+justify-content: center;
 `;
 const BodyWrap = styled.div`
 display: flex;
@@ -88,7 +91,7 @@ const BtnBox = styled.div`
   left: 2rem;
 `;
 const Btn = styled.div`
-  width: 200px;
+  width: 150px;
   height: 40px;
   font-size: 1.2rem;
   font-weight: 550;
@@ -102,4 +105,7 @@ const Btn = styled.div`
   color: #fff;
   cursor: pointer;
 `;
-export {Container, Main, Head, HeadText, Body, BodyText, BodyWrap, LoginBox, LoginBtn, LoginInput, BtnBox, Btn}
+
+
+export {Container, Main, Head, HeadText, Body, BodyText, BodyWrap, LoginBox, LoginBtn, LoginInput, 
+  BtnBox, Btn, }
