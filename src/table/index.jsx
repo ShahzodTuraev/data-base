@@ -11,6 +11,8 @@ const TablePage = () => {
   const [userPage, setUserPage] = useState(true)
   const [emailPage, setEmailPage] = useState(false)
   const [emailSendPage, setEmailSendPage] = useState(false)
+  const [smsSendPage, setSmsSendPage] = useState(false)
+
   const [smsPage, setSmsPage] = useState(false)
   const [memberPage, setMemberPage] = useState(false)
   const [subPage, setSubPage] = useState(false)
@@ -73,6 +75,15 @@ const onPayment = () => {
   setSmsPage(false)
   setMemberPage(false)
   setEmailSendPage(false)
+  setSmsSendPage(false)
+};
+const onSmsSend = () => {
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setEmailSendPage(false)
+  setSmsSendPage(true)
 };
 const onEmail = () => {
   setUserPage(false)
@@ -80,6 +91,7 @@ const onEmail = () => {
   setSmsPage(false)
   setMemberPage(false)
   setEmailSendPage(false)
+  setSmsSendPage(false)
 };
 const onSend = () => {
   setUserPage(false)
@@ -88,6 +100,7 @@ const onSend = () => {
   setSmsPage(false)
   setMemberPage(false)
   setSubPage(false)
+  setSmsSendPage(false)
 
 };
 const onSms = () => {
@@ -96,6 +109,7 @@ const onSms = () => {
   setSmsPage(true)
   setMemberPage(false)
   setEmailSendPage(false)
+  setSmsSendPage(false)
 
 };
 const onMember = () => {
@@ -104,6 +118,7 @@ const onMember = () => {
   setSmsPage(false)
   setMemberPage(true)
   setEmailSendPage(false)
+  setSmsSendPage(false)
 };
 const onSubscription = () => {
   setUserPage(false)
@@ -112,6 +127,121 @@ const onSubscription = () => {
   setMemberPage(false)
   setSubPage(true)
   setEmailSendPage(false)
+  setSmsSendPage(false)
+};
+const MailForm = () => {
+  const [to, setTo] = useState('');
+  const [subject, setSubject] = useState('');
+  const [text, setText] = useState('');
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('address', to);
+    formData.append('title', subject);
+    formData.append('content', text);
+    formData.append('file', file);
+
+    axios.post('https://api.mever.me:8080/send/mail', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+      .then((response) => {
+        console.log(response.data);
+        // 메일 전송 성공 시 동작할 코드 작성
+      })
+      .catch((error) => {
+        console.error(error);
+        // 메일 전송 실패 시 동작할 코드 작성
+      });
+  };
+
+  return (
+    <form id="mailForm" encType="multipart/form-data" onSubmit={handleSubmit}>
+    <div>
+      <label htmlFor="to">받는 사람:</label>
+      <input type="email" id="to" name="address" required />
+    </div>
+    <div>
+      <label htmlFor="subject">제목:</label>
+      <input type="text" id="subject" name="title" required />
+    </div>
+    <div>
+      <label htmlFor="text">본문:</label>
+      <textarea id="text" name="content" required></textarea>
+    </div>
+    <div>
+      <label htmlFor="file">첨부 파일:</label>
+      <input type="file" id="file" name="file" />
+    </div>
+    <button type="submit">전송</button>
+  </form>
+  );
+};
+const SmsForm = () => {
+  const [msg, setMsg] = useState('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('email', "");
+    formData.append('phone', "");
+    formData.append('content', msg);
+    formData.append('type', "sms");
+
+    axios.post('http://link.smsceo.co.kr/sendsms_utf8.php', formData, {
+     
+    })
+      .then((response) => {
+        console.log(response.data);
+        // 메일 전송 성공 시 동작할 코드 작성
+      })
+      .catch((error) => {
+        console.error(error);
+        // 메일 전송 실패 시 동작할 코드 작성
+      });
+  };
+
+  return (
+    <form id="smsForm" method="POST" action={handleSubmit}>
+    <div>
+      <label htmlFor="msg">메시지:</label>
+      <input type="text" id="msg" name="msg" value="" />
+    </div>
+    <div>
+      <label htmlFor="phone">전화번호:</label>
+      <input type="text" name="phone" value="" />
+    </div>
+    <div>
+      <label htmlFor="callback">콜백 번호:</label>
+      <input type="hidden" name="callback" value="01072818209" />
+    </div>
+    <div>
+      <label htmlFor="send_date">전송 날짜:</label>
+      <input type="date" name="send_date" value="" />
+    </div>
+    <input
+      type="hidden"
+      name="userkey"
+      value="BzxQZV1sDzVSYAdmUX4HOFZmB3QAM1MuA34="
+    />
+    <input type="hidden" name="userid" value="mever" />
+    <input
+      type="hidden"
+      name="return_url"
+      value="http://localhost:8080/send/sms/success?email=test@tst.com&phone=01012341234&url=http://localhost:8080/"
+    />
+    <input type="hidden" name="return_var" value="" />
+    <button type="submit">전송</button>
+  </form>
+  );
 };
 
 // SEARCHING FUNCTION: 
@@ -136,6 +266,7 @@ const priceRef = useRef()
           <Btn onClick={onPayment} style={userPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>결제 내역</Btn>
           <Btn onClick={onEmail} style={emailPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일</Btn>
           <Btn onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
+          <Btn onClick={onSmsSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>문자보내기</Btn>
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
@@ -273,22 +404,11 @@ const priceRef = useRef()
           ))}
         </BodyWrap>
       </Main>}
-      {access && emailSendPage &&
-      <Main>
-            <br></br>
-        <form >
-      <label>Name</label>
-      <input type="text" name="user_name" />
-      <br></br>
-      <br></br>
-      <label>Email</label>
-      <input type="email" name="user_email" />
-      <br></br>
-      <br></br>
-      <label>Message</label>
-      <textarea name="message" />
-      <input type="submit" value="Send" />
-    </form>
+      {access && emailSendPage && <Main>
+        <MailForm />
+      </Main>}
+      {access && smsSendPage && <Main>
+        <SmsForm />
       </Main>}
     </Container>
   )
