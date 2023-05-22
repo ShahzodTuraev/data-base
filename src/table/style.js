@@ -105,7 +105,52 @@ const Btn = styled.div`
   color: #fff;
   cursor: pointer;
 `;
+const SearchBox = styled.div`
+  text-align: center;
+  margin-top:0.3rem;
+  margin-bottom: 0.3rem;
+
+  select {
+    background: coral;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+
+  input {
+    background: coral;
+    color: black;
+    font-size: 16px;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 4px;
+  }
+`;
+const Dropdown = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+const DropdownButton = styled.button`
+  /* 드롭다운 버튼의 스타일을 정의해주세요 */
+`;
+
+const DropdownContent = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  /* 드롭다운 컨텐츠의 스타일을 정의해주세요 */
+`;
+
+const DropdownItem = styled.div`
+  /* 드롭다운 아이템의 스타일을 정의해주세요 */
+`;
 
 
 export {Container, Main, Head, HeadText, Body, BodyText, BodyWrap, LoginBox, LoginBtn, LoginInput, 
-  BtnBox, Btn, }
+  BtnBox, Btn, Dropdown, SearchBox }

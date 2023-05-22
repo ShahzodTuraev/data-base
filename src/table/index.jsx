@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Btn, BtnBox, Container, LoginBox, LoginBtn, LoginInput } from './style'
+import { Btn, BtnBox, Container, LoginBox, LoginBtn, LoginInput,Dropdown } from './style'
 import PaymentList from '../components/PaymentList'
 import EmailList from '../components/EmailList'
 import SmsList from '../components/SmsList'
@@ -17,6 +17,9 @@ const TablePage = () => {
   const [password, setPassword] = useState('')
   // SUBSCRIPTION BUTTON STATES :
 
+  // SEARCH STATES:
+  const [searchType, setSearchType] = useState('name'); // Default search type
+  const [searchValue, setSearchValue] = useState('');
 
 
   // LOGIN PAGE FUNCTIONS:
@@ -98,7 +101,7 @@ const onSubscription = () => {
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
       } 
-      {access && userPage && <PaymentList/>}
+      {access && userPage && <PaymentList />}
       {access && emailPage && <EmailList/>}
       {access && smsPage && <SmsList/>}
       {access && memberPage && <MemberList/>}
