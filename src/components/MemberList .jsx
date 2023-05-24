@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import{Main, Head, HeadText, Body, BodyText, BodyWrap, Btn, } from '../table/style'
 import SubscripPage from './SubscribeInfo';
+import SendingPage from './SendingPage';
 const MemberList = () => {
   const [memberList, setMemberList] = useState([]);
   const [selectUser, setSelectUser] = useState()
+  const [selectEmail, setSelectEmail] = useState()
   const [uniquePage, setUniquePage] = useState(false)
   const [inputEmail, setInputEmail] = useState('')
+  const [inputPhone, setInputPhone] = useState('')
+  const [sendingPage, setSendingPage] = useState(false)
+  const [indexEmail, setIndexEmail] = useState()
   // MEMBER DATA :
   useEffect(()=>{
     axios.post('https://api.mever.me:8080/member/list', {
@@ -15,37 +20,39 @@ const MemberList = () => {
     });
   }, [])
 
+  const [uniqueData, setUniqueData] = useState([])
 // SUBSCRIBTION BUTTON FUNCTION :
 const onSubscribe = (index) => {
   setSelectUser(index);
   setUniquePage(true)
-    setInputEmail(memberList[index].email)
-
-  // console.log(uniqueData[0].email);
+  setInputEmail(memberList[index]?.email);
+  setInputPhone(memberList[index]?.phone);
 
 }
+// SEND EMAIL BTN FUNCTION:
+const onSendEmail = (index) => {
+  setSelectEmail(index)
+  setSendingPage(true)
+  setIndexEmail(index)
+}
+// console.log(inputEmail);
+// console.log(inputPhone);
 
-console.log(inputEmail);
 // UNIQUE PAGE DATA :
-const [uniqueData, setUniqueData] = useState([])
 
-useEffect(() => {
+useEffect(() => { 
   axios.post('https://api.mever.me:8080/subscription/list', {
     email: inputEmail,
-    phone: '01012341234',
+    phone: inputPhone,
   })
-    .then((response) => {
-      // if (response.data.length > 0 && response !== undefined && response !== null && response.data !== undefined &&response.data !== null) {
-      //   setUniqueData(response.data);
-      // } else {
-      //   setUniqueData([]);
-      // }
-      setUniqueData(response.data)
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-}, []);
+  .then((response) => {
+    setUniqueData(response.data)
+    
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+}, [inputEmail, inputPhone]);
 
 return (
   <>
@@ -57,7 +64,7 @@ return (
           <HeadText>전화번호</HeadText>
           <HeadText>설문 조사 결과</HeadText>
           <HeadText>내용</HeadText>
-          <HeadText>email</HeadText>
+          <HeadText>이메일</HeadText>
         </Head>
         <BodyWrap>
           {memberList.map((list, index)=>(
@@ -68,13 +75,14 @@ return (
               <BodyText>{list.phone}</BodyText>
               <BodyText>{list.dcrp}</BodyText>
               <BodyText><Btn style={index === selectUser ? {background: 'coral', color: '#000'} : {border: 'none'}} onClick={()=>{onSubscribe(index)}}>구독 정보</Btn></BodyText>
-              <BodyText><Btn >email 정보</Btn></BodyText>
+              <BodyText><Btn style={index === selectEmail ? {background: 'coral', color: '#000'} : {border: 'none'}} onClick={()=>{onSendEmail(index)}}>이메일 예약</Btn></BodyText>
               
             </Body>
           ))}
         </BodyWrap>
       </Main>
-      {uniquePage && <SubscripPage uniqueData = {uniqueData} userIndex ={selectUser} setClose ={setUniquePage}/>}
+      {uniquePage && <SubscripPage uniqueData = {uniqueData} userIndex ={selectUser} setUserIndex ={setSelectUser} setClose ={setUniquePage}/>}
+      {sendingPage && <SendingPage memberList = {memberList} emailIndex ={indexEmail} setClose ={setSendingPage} setUserIndex ={setSelectEmail}/>}
     </>  
       
   )
