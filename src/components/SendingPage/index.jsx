@@ -2,30 +2,35 @@ import React, { useState } from 'react'
 import { Btn, Container, Icon, Input, Text, TextArea, Wrap, Select, Alert, HeadWrap } from './style'
 import axios from 'axios'
 
-const SendingPage = ({memberList, setClose, emailIndex, setUserIndex}) => {
+const SendingPage = ({memberList, setClose, emailIndex, setUserIndex, checkedUsers}) => {
   const [select, setSelect] = useState('')
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [selectAlert, setSelectAlert] = useState('')
   const [titleAlert, setTitleAlert] = useState('')
   const [contentAlert, setContentAlert] = useState('')
-  const data = memberList[emailIndex]
+  // const data = memberList[checkedUsers[0]]
+  const data = memberList.filter((user, index)=>(checkedUsers.includes(index)&&user))
+  const alfa = data.map((val)=>({ala: val.email}))
   const onClose =()=>{
     setClose(false)
     setUserIndex('')
+    console.log(alfa);
   }
   const onChange =(setState)=> (e) =>{
     setState(e.target.value)
   }
   const onSubmit =()=>{
     if(select.length > 0 && title.length >0 && content.length > 0){
-      axios.post('https://api.mever.me:8080/send/reservation/mail', [{
-        email: data.email,
+      axios.post('https://api.mever.me:8080/send/reservation/mail', 
+      data.map((val)=>({
+        email: val.email,
         title: title,
         content: content,
         period: select,
         phone: data.phone
-      }])
+      }))
+      )
       .then(function (response) {
         console.log(response);
       })
@@ -46,7 +51,7 @@ const SendingPage = ({memberList, setClose, emailIndex, setUserIndex}) => {
     <Container >
       <Icon.Close onClick={onClose}/>
       <Wrap>
-        <Text >이메일 : {data.email}</Text>
+        {/* <Text >이메일 : {data.email}</Text> */}
         <Text >종류 선택 :</Text>
           <HeadWrap>
             <Select onChange={onChange(setSelect)} onFocus={onFocusSelect} name="period" id="period-select">
