@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Btn, BtnBox, Container, LoginBox, LoginBtn, LoginInput,Dropdown } from './style'
+import MainAnalytics from '../components/MainAnalytics'
 import PaymentList from '../components/PaymentList'
 import EmailList from '../components/EmailList'
 import SmsList from '../components/SmsList'
@@ -7,7 +8,8 @@ import MemberList from '../components/MemberList '
 const TablePage = () => {
 // PAGES' DISPLAY STATES : 
   const [access, setAccess] = useState(false)
-  const [userPage, setUserPage] = useState(true)
+  const [mainPage, setMainPage] = useState(true)
+  const [userPage, setUserPage] = useState(false)
   const [emailPage, setEmailPage] = useState(false)
   const [emailSendPage, setEmailSendPage] = useState(false)
   const [smsPage, setSmsPage] = useState(false)
@@ -35,12 +37,21 @@ const TablePage = () => {
   }
 
 // PAGE BUTTON CONTROL:
+const onMain = () => {
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setEmailSendPage(false)
+  setMainPage(true)
+};
 const onPayment = () => {
   setUserPage(true)
   setEmailPage(false)
   setSmsPage(false)
   setMemberPage(false)
   setEmailSendPage(false)
+  setMainPage(false)
 };
 const onEmail = () => {
   setUserPage(false)
@@ -48,6 +59,7 @@ const onEmail = () => {
   setSmsPage(false)
   setMemberPage(false)
   setEmailSendPage(false)
+  setMainPage(false)
 };
 const onSend = () => {
   setUserPage(false)
@@ -56,7 +68,7 @@ const onSend = () => {
   setSmsPage(false)
   setMemberPage(false)
   setSubPage(false)
-
+  setMainPage(false)
 };
 const onSms = () => {
   setUserPage(false)
@@ -64,7 +76,7 @@ const onSms = () => {
   setSmsPage(true)
   setMemberPage(false)
   setEmailSendPage(false)
-
+  setMainPage(false)
 };
 const onMember = () => {
   setUserPage(false)
@@ -72,6 +84,7 @@ const onMember = () => {
   setSmsPage(false)
   setMemberPage(true)
   setEmailSendPage(false)
+  setMainPage(false)
 };
 const onSubscription = () => {
   setUserPage(false)
@@ -80,6 +93,7 @@ const onSubscription = () => {
   setMemberPage(false)
   setSubPage(true)
   setEmailSendPage(false)
+  setMainPage(false)
 };
 
 
@@ -94,6 +108,7 @@ const onSubscription = () => {
       </LoginBox>
       {access && 
         <BtnBox>
+          <Btn onClick={onMain} style={mainPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메인</Btn>
           <Btn onClick={onPayment} style={userPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>결제 내역</Btn>
           <Btn onClick={onEmail} style={emailPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일</Btn>
           <Btn onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
@@ -101,6 +116,7 @@ const onSubscription = () => {
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
         </BtnBox>
       } 
+      {access && mainPage && <MainAnalytics />}
       {access && userPage && <PaymentList />}
       {access && emailPage && <EmailList/>}
       {access && smsPage && <SmsList/>}
