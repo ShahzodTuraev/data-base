@@ -79,3 +79,14 @@ export const Btn = styled.div`
   color: #fff;
   cursor: pointer;
 `;
+export const InputContainer = styled.div`
+  margin-bottom: 10px;
+`;
+
+export const Input = styled.input`
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+`;
