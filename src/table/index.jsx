@@ -7,6 +7,7 @@ import EmailList from '../components/EmailList'
 import SmsList from '../components/SmsList'
 import MemberList from '../components/MemberList'
 import ContolList from '../components/ControlList'
+import ItemList from '../components/ItemList'
 const TablePage = () => {
 // PAGES' DISPLAY STATES : 
   const [access, setAccess] = useState(false)
@@ -18,6 +19,7 @@ const TablePage = () => {
   const [memberPage, setMemberPage] = useState(false)
   const [subPage, setSubPage] = useState(false)
   const [controlPage, setContolPage] = useState(false)
+  const [itemListPage, setItemListPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   // SUBSCRIPTION BUTTON STATES :
@@ -61,6 +63,7 @@ const TablePage = () => {
 
 // PAGE BUTTON CONTROL:
 const onMain = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailPage(false)
   setSmsPage(false)
@@ -70,6 +73,7 @@ const onMain = () => {
   setContolPage(false)
 };
 const onPayment = () => {
+  setItemListPage(false)
   setUserPage(true)
   setEmailPage(false)
   setSmsPage(false)
@@ -79,6 +83,7 @@ const onPayment = () => {
   setContolPage(false)
 };
 const onEmail = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailPage(true)
   setSmsPage(false)
@@ -88,6 +93,7 @@ const onEmail = () => {
   setContolPage(false)
 };
 const onSend = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailSendPage(true)
   setEmailPage(false)
@@ -98,6 +104,7 @@ const onSend = () => {
   setContolPage(false)
 };
 const onSms = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailPage(false)
   setSmsPage(true)
@@ -107,6 +114,7 @@ const onSms = () => {
   setContolPage(false)
 };
 const onMember = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailPage(false)
   setSmsPage(false)
@@ -115,17 +123,18 @@ const onMember = () => {
   setMainPage(false)
   setContolPage(false)
 };
-const onSubscription = () => {
-  setUserPage(false)
-  setEmailPage(false)
-  setSmsPage(false)
-  setMemberPage(false)
-  setSubPage(true)
-  setEmailSendPage(false)
-  setMainPage(false)
-  setContolPage(false)
-};
+// const onSubscription = () => {
+//   setUserPage(false)
+//   setEmailPage(false)
+//   setSmsPage(false)
+//   setMemberPage(false)
+//   setSubPage(true)
+//   setEmailSendPage(false)
+//   setMainPage(false)
+//   setContolPage(false)
+// };
 const onContol = () => {
+  setItemListPage(false)
   setUserPage(false)
   setEmailPage(false)
   setSmsPage(false)
@@ -133,6 +142,16 @@ const onContol = () => {
   setEmailSendPage(false)
   setMainPage(false)
   setContolPage(true)
+};
+const onItem = () => {
+  setItemListPage(true)
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setEmailSendPage(false)
+  setMainPage(false)
+  setContolPage(false)
 };
 
   return (
@@ -151,6 +170,7 @@ const onContol = () => {
           <Btn onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
+          <Btn onClick={onItem} style={itemListPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>상품 관리</Btn>
           <Btn onClick={onContol} style={controlPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>설정</Btn>
         </BtnBox>
       } 
@@ -159,6 +179,7 @@ const onContol = () => {
       {access && emailPage && <EmailList/>}
       {access && smsPage && <SmsList/>}
       {access && memberPage && <MemberList/>}
+      {access && itemListPage && <ItemList/>}
       {access && controlPage && <ContolList/>}
     </Container>
   )
