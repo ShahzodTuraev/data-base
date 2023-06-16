@@ -57,7 +57,8 @@ const ItemList = () => {
     <div>
       {products.map((product, index) => (
         <div className="product" key={index}>
-          <img src={process.env.PUBLIC_URL + '/' + product.photoUrl} alt="상품 사진" />
+          {/* <img src={process.env.PUBLIC_URL + '/' + product.photoUrl} alt="상품 사진" /> */}
+          <img src={product.photoUrl} alt="상품 사진" />
           {/* {product.photoUrl} */}
           <h3 className="itemTitle">{product.itemTitle}</h3>
           <div>가격: {product.price.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원 </div>
