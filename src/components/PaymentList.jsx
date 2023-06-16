@@ -6,9 +6,10 @@ const PaymentList = () => {
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('name');
+  const category = localStorage.getItem('category')
 
   useEffect(() => {
-    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {}).then((data) => {
+    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {category}).then((data) => {
       setUsers(data.data);
     });
   }, []);
