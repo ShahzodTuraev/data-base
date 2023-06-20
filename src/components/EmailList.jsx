@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import{Main, Head, HeadText, Body, BodyText, BodyWrap} from '../table/style'
+import{Main, Head, HeadText, Body, BodyText, BodyWrap, Space} from '../table/style'
 const EmailList = () => {
 const [emailList, setEmailList] = useState([])
 
@@ -12,7 +12,9 @@ useEffect(()=>{
   });
 }, [])
   return (  
-    <Main>
+    <>
+      <Space></Space>
+      <Main>
         <Head>
           <HeadText>일자</HeadText>
           <HeadText>이메일</HeadText>
@@ -32,6 +34,7 @@ useEffect(()=>{
           ))}
         </BodyWrap>
       </Main>
+    </>
   )
 }
 
