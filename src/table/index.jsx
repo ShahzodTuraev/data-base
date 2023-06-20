@@ -8,6 +8,8 @@ import SmsList from '../components/SmsList'
 import MemberList from '../components/MemberList'
 import ContolList from '../components/ControlList'
 import ItemList from '../components/ItemList'
+import ReservationList from '../components/ReservationList'
+
 const TablePage = () => {
 // PAGES' DISPLAY STATES : 
   const [access, setAccess] = useState(false)
@@ -18,8 +20,9 @@ const TablePage = () => {
   const [smsPage, setSmsPage] = useState(false)
   const [memberPage, setMemberPage] = useState(false)
   const [subPage, setSubPage] = useState(false)
-  const [controlPage, setContolPage] = useState(false)
+  const [controlPage, setControlPage] = useState(false)
   const [itemListPage, setItemListPage] = useState(false)
+  const [reserPage, setReserPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   // SUBSCRIPTION BUTTON STATES :
@@ -49,7 +52,7 @@ const TablePage = () => {
       console.log(data);
       // 회원 정보 확인 결과에 따라 로그인 처리
       if (data.statusCodeValue !== 400) {
-        localStorage.setItem('category',data.category);                                                                                                 
+        localStorage.setItem('category',data.category);
         setAccess(true);
       } else {
         alert('아이디 또는 패스워드가 잘못되었습니다.');
@@ -70,7 +73,8 @@ const onMain = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(true)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 const onPayment = () => {
   setItemListPage(false)
@@ -80,7 +84,8 @@ const onPayment = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 const onEmail = () => {
   setItemListPage(false)
@@ -90,7 +95,8 @@ const onEmail = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 const onSend = () => {
   setItemListPage(false)
@@ -101,7 +107,8 @@ const onSend = () => {
   setMemberPage(false)
   setSubPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 const onSms = () => {
   setItemListPage(false)
@@ -111,7 +118,8 @@ const onSms = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 const onMember = () => {
   setItemListPage(false)
@@ -121,19 +129,21 @@ const onMember = () => {
   setMemberPage(true)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
-// const onSubscription = () => {
-//   setUserPage(false)
-//   setEmailPage(false)
-//   setSmsPage(false)
-//   setMemberPage(false)
-//   setSubPage(true)
-//   setEmailSendPage(false)
-//   setMainPage(false)
-//   setContolPage(false)
-// };
-const onContol = () => {
+const onReser = () => {
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setSubPage(false)
+  setEmailSendPage(false)
+  setMainPage(false)
+  setControlPage(false)
+  setReserPage(true)
+};
+const onControl = () => {
   setItemListPage(false)
   setUserPage(false)
   setEmailPage(false)
@@ -141,7 +151,8 @@ const onContol = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(true)
+  setControlPage(true)
+  setReserPage(false)
 };
 const onItem = () => {
   setItemListPage(true)
@@ -151,7 +162,8 @@ const onItem = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
+  setReserPage(false)
 };
 
   return (
@@ -171,7 +183,8 @@ const onItem = () => {
           <Btn onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
           <Btn onClick={onItem} style={itemListPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>상품 관리</Btn>
-          <Btn onClick={onContol} style={controlPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>설정</Btn>
+          <Btn onClick={onControl} style={controlPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>설정</Btn>
+          <Btn onClick={onReser} style={reserPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>예약관리</Btn>
         </BtnBox>
       } 
       {access && mainPage && <MainAnalytics />}
@@ -181,6 +194,7 @@ const onItem = () => {
       {access && memberPage && <MemberList/>}
       {access && itemListPage && <ItemList/>}
       {access && controlPage && <ContolList/>}
+      {access && reserPage && <ReservationList/>}
     </Container>
   )
 }

@@ -135,22 +135,5 @@ const Dropdown = styled.div`
   display: inline-block;
 `;
 
-const DropdownButton = styled.button`
-  /* 드롭다운 버튼의 스타일을 정의해주세요 */
-`;
-
-const DropdownContent = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  /* 드롭다운 컨텐츠의 스타일을 정의해주세요 */
-`;
-
-const DropdownItem = styled.div`
-  /* 드롭다운 아이템의 스타일을 정의해주세요 */
-`;
-
-
 export {Container, Main, Head, HeadText, Body, BodyText, BodyWrap, LoginBox, LoginBtn, LoginInput, 
   BtnBox, Btn, Dropdown, SearchBox }
