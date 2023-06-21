@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import axios from 'axios';
 import { Main, Head, HeadText, Body, BodyText, BodyWrap, Btn, Space } from '../table/style'
 import { Chart, registerables } from 'chart.js';
@@ -21,7 +21,7 @@ const MainAnalytics = () => {
     const fetchData = async () => {
       try {
         const response = await axios.post('https://api.mever.me:8080/getMainTitle', {
-          category: category,
+          category: category,          
         });
         const { title, subTitle } = response.data;
         setMainTitle(title);
@@ -130,9 +130,12 @@ const doughnutOptions = {
   };
 
   const resetChart = () => {
-    setChartData(null);
+    // setChartData(null);
     setChartKey(Date.now());
-  };
+    renderChart();
+    renderDoughnutChart();
+  }; 
+
   localStorage.setItem('mainTitle',mainTitle);
   localStorage.setItem('subTitle',subTitle);
   return (

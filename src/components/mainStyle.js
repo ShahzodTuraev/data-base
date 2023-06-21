@@ -90,3 +90,110 @@ export const Input = styled.input`
   border-radius: 4px;
   font-size: 16px;
 `;
+export const CalendarContainer = styled.div`
+  width: 80%;
+  /* 모바일 스타일 */
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    margin-left: 70%;
+    height: 80%;
+  }
+`;
+
+export const Popup = styled.div`
+  background-color: #fffd;
+  border: 1px solid black;
+  /* 모바일 스타일 */
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    top: 20%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 10%;
+    max-width: 400px;
+    max-height: 600px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  /* 데스크탑 스타일 */
+  @media screen and (min-width: 769px) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export const Button = styled.button`
+  background-color: #0E3B68;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-weight: bold;
+`;
+
+export const Overlay = styled.div`
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+`;
+export const eventContainer = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+};
+
+export const eventTitle = {
+  marginTop: '5px',
+  fontWeight: 'bold'
+};
+
+export const eventTime = {
+  fontWeight: 'normal',
+  textAlign: 'left',
+};
+
+export const eventStatus = {
+  marginTop: '5px',
+  padding: '5px',
+  borderRadius: '5px',
+  color: '#fff',
+  fontWeight: 'bold',
+};
+
+export const eventStatusPending = {
+  ...eventStatus,
+  backgroundColor: 'green',
+};
+
+export const eventStatusApproved = {
+  ...eventStatus,
+  backgroundColor: 'blue',
+};
+
+export const eventStatusReject = {
+  ...eventStatus,
+  backgroundColor: 'red',
+};

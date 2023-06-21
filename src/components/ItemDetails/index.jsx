@@ -15,8 +15,6 @@ const ItemDetails = ({ itemDetails, handleClosePopup,handleRefresh }) => {
   const [orderId, setOrderId] = useState(itemDetails.orderId || '');
 const [readOnly, setReadOnly] = useState(true);
 const [isEditing, setIsEditing] = useState(false);
-console.log('@@@ : '+orderId);
-
 
   const updateThumbnailUrls = () => {
     clearThumbnailUrls();

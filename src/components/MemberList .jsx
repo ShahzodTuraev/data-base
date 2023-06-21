@@ -13,10 +13,12 @@ const MemberList = () => {
   const [sendingPage, setSendingPage] = useState(false)
   // const [indexEmail, setIndexEmail] = useState()
   const [checkedUsers, setCheckedUsers] = useState([])
+  const category = localStorage.getItem('category');
   const checkedArr =[]
   // MEMBER DATA :
   useEffect(()=>{
     axios.post('https://api.mever.me:8080/member/list', {
+      category:category
     }).then((data)=>{
       setMemberList(data.data)
     });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Btn, BtnBox, CloseWrap, Container, Icon, LoginBox, LoginBtn, LoginInput, Sidebar } from './style'
 import PaymentList from '../components/PaymentList'
 import EmailList from '../components/EmailList'
@@ -7,6 +7,7 @@ import MemberList from '../components/MemberList '
 import ContolList from '../components/ControlList'
 import MainAnalytics from '../components/MainAnalytics'
 import Management from '../components/ManagementPage'
+import ReservationList from '../components/ReservationList'
 import axios from 'axios'
 
 const TablePage = () => {
@@ -21,13 +22,14 @@ const TablePage = () => {
   const [subPage, setSubPage] = useState(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
-  const [controlPage, setContolPage] = useState(false)
+  const [controlPage, setControlPage] = useState(false)
   const [managePage, setManagePage] = useState(false)
+  const [reserPage, setReserPage] = useState(false)
   // SUBSCRIPTION BUTTON STATES :
 
   // SEARCH STATES:
-  const [searchType, setSearchType] = useState('name'); // Default search type
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchType, setSearchType] = useState('name'); 
+  // const [searchValue, setSearchValue] = useState('');
 
   // LOGIN PAGE FUNCTIONS:
   const onId = (e) => {
@@ -69,9 +71,10 @@ const onMain = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(true)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onPayment = () => {
   setUserPage(true)
@@ -80,9 +83,10 @@ const onPayment = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onEmail = () => {
   setUserPage(false)
@@ -91,9 +95,10 @@ const onEmail = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onSend = () => {
   setUserPage(false)
@@ -103,9 +108,10 @@ const onSend = () => {
   setMemberPage(false)
   setSubPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onSms = () => {
   setUserPage(false)
@@ -114,9 +120,10 @@ const onSms = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onMember = () => {
   setUserPage(false)
@@ -125,21 +132,10 @@ const onMember = () => {
   setMemberPage(true)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
   setManagePage(false)
-};
-const onSubscription = () => {
-  setUserPage(false)
-  setEmailPage(false)
-  setSmsPage(false)
-  setMemberPage(false)
-  setSubPage(true)
-  setEmailSendPage(false)
-  setMainPage(false)
-  setContolPage(false)
-  setOpen(false)
-  setManagePage(false)
+  setReserPage(false)
 };
 const onContol = () => {
   setUserPage(false)
@@ -148,9 +144,10 @@ const onContol = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(true)
+  setControlPage(true)
   setOpen(false)
   setManagePage(false)
+  setReserPage(false)
 };
 const onManage = () => {
   setUserPage(false)
@@ -159,10 +156,23 @@ const onManage = () => {
   setMemberPage(false)
   setEmailSendPage(false)
   setMainPage(false)
-  setContolPage(false)
+  setControlPage(false)
   setOpen(false)
+  setReserPage(false)
   setManagePage(true)
 }
+const onReser = () => {
+  setReserPage(true)
+  setUserPage(false)
+  setEmailPage(false)
+  setSmsPage(false)
+  setMemberPage(false)
+  setSubPage(false)
+  setEmailSendPage(false)
+  setMainPage(false)
+  setManagePage(false)
+  setControlPage(false)
+};
 
 const [open, setOpen] = useState(false)
 const onOpen =()=>{
@@ -186,11 +196,12 @@ const onOpen =()=>{
           <Btn margin='10px 20px 10px 0' onClick={onMain} style={mainPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메인</Btn>
           <Btn margin='10px 20px 10px 0' onClick={onPayment} style={userPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>결제 내역</Btn>
           <Btn margin='10px 20px 10px 0' onClick={onEmail} style={emailPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일</Btn>
-          <Btn margin='10px 20px 10px 0' onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
+          {/* <Btn margin='10px 20px 10px 0' onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn> */}
           <Btn margin='10px 20px 10px 0' onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
           <Btn margin='10px 20px 10px 0' onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
           <Btn margin='10px 20px 10px 0' onClick={onContol} style={controlPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>설정</Btn>
           <Btn margin='10px 20px 10px 0' onClick={onManage} style={managePage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>상품 관리</Btn>
+          <Btn margin='10px 20px 10px 0' onClick={onReser} style={reserPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>예약 관리</Btn>
         </Sidebar>
         }
       {access&& <Icon.Menu onClick={onOpen}/>}
@@ -199,12 +210,12 @@ const onOpen =()=>{
             <Btn margin='10px 20px 10px 0' onClick={onMain} style={mainPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메인</Btn>
             <Btn margin='10px 20px 10px 0' onClick={onPayment} style={userPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>결제 내역</Btn>
             <Btn margin='10px 20px 10px 0' onClick={onEmail} style={emailPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일</Btn>
-            <Btn margin='10px 20px 10px 0' onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn>
+            {/* <Btn margin='10px 20px 10px 0' onClick={onSend} style={emailSendPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>이메일보내기</Btn> */}
             <Btn margin='10px 20px 10px 0' onClick={onSms} style={smsPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>메시지</Btn>
             <Btn margin='10px 20px 10px 0' onClick={onMember} style={memberPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>고객</Btn>
             <Btn margin='10px 20px 10px 0' onClick={onContol} style={controlPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>설정</Btn>
             <Btn margin='10px 20px 10px 0' onClick={onManage} style={managePage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>상품 관리</Btn>
-            
+            <Btn margin='10px 20px 10px 0' onClick={onReser} style={reserPage ? {color:'#000', background: 'coral'} : {color: '#fff'}}>예약 관리</Btn>            
           </BtnBox>
       }
       {access && mainPage && <MainAnalytics />}
@@ -214,6 +225,7 @@ const onOpen =()=>{
       {access && memberPage && <MemberList/>}
       {access && controlPage && <ContolList/>}
       {access && managePage && <Management/>}
+      {access && reserPage && <ReservationList/>}
     </Container>
   )
 }
