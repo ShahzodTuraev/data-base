@@ -17,9 +17,14 @@ const MemberList = () => {
   const checkedArr =[]
   // MEMBER DATA :
   useEffect(()=>{
-    axios.post('https://api.mever.me:8080/member/list', {
-      category:category
-    }).then((data)=>{
+    axios
+    .post('https://api.mever.me:8080/member/list', null, {
+      params: {
+        email: '',
+        category: category,
+      },
+    })
+    .then((data)=>{
       setMemberList(data.data)
     });
   }, [])
