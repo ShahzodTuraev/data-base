@@ -17,3 +17,10 @@ code {
   transition: all 0.3s;
 
 }
+.closeBtn{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+}

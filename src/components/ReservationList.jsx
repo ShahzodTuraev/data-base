@@ -3,6 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarContainer, Popup, ButtonContainer, Button,eventContainer,eventTitle,eventStatus,eventStatusPending,eventStatusApproved,eventStatusReject,eventTime } from './mainStyle';
 import axios from 'axios';
+import closeBtn from "../assets/icons/close-img.png"
 
 // npm install @fullcalendar/react @fullcalendar/daygrid
 
@@ -80,8 +81,10 @@ const ReservationList = () => {
     fetchEvents();
     setSelectedEvent(null);
   };
-  const handleUpdateReservation = async () => {
-    
+  const handleUpdateReservation = () => {
+    // console.log(selectedEvent);
+    // console.log(time.replace("T", " "));
+    setChange(true)
   };
   const handleUpdateButtonClick = () => {
     // 수정할 예약 정보를 설정합니다.
@@ -89,6 +92,22 @@ const ReservationList = () => {
     // 예를 들어, 팝업 내에 있는 예약 정보를 수정할 수 있습니다.
     setUpdatedReservationTime(selectedEvent.start && selectedEvent.start.toLocaleString());
   };
+
+  const [time, setTime] =useState('')
+  const [change, setChange] = useState(false)
+  const [show, setShow] = useState(true)
+  const onTimeChange =()=>{
+    console.log('hello');
+    axios.post("https://api.mever.me:8080/updateReservation",{
+      reservationDate: time.replace("T", " "),
+      seq: selectedEvent._def.extendedProps.seq,
+      email: selectedEvent._def.extendedProps.email,
+      phone: selectedEvent._def.extendedProps.phone,
+
+    }).then(alert('Date is changed'))
+    .catch((error=>{console.log(error)}))
+    setSelectedEvent(null)
+  }
   return (
     <CalendarContainer>
       <FullCalendar
@@ -114,10 +133,13 @@ const ReservationList = () => {
           </div>
         )}
         />
-     {selectedEvent && (
-        <Popup>
+      {selectedEvent &&  (
+        <Popup >
+          {/* <img  className='closeBtn' src={closeBtn} alt="닫기" /> */}
           <h3>예약 정보</h3>
           <p>예약일시: {selectedEvent.start && selectedEvent.start.toLocaleString()}</p>
+          {change && <input type="datetime-local" onChange={(e)=>setTime(e.target.value)}/>}
+          {change && <Button onClick={onTimeChange}>수정</Button>}
           <p>상품정보: {selectedEvent.title}</p>
           <p>고객3: {selectedEvent.extendedProps.email && selectedEvent.extendedProps.email.toString()}</p>
           <Button onClick={handleConfirmReservation}>예약확정</Button>
