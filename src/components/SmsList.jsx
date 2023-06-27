@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import{Main, Head, HeadText, Body, BodyText, BodyWrap} from '../table/style'
+import{Main, Head, HeadText, Body, BodyText, BodyWrap, Space} from '../table/style'
 const SmsList = () => {
   const [smsList, setSmsList] = useState([])
 
@@ -11,8 +11,10 @@ useEffect(()=>{
     setSmsList(data.data)
   });
 }, [])
-  return (  
-    <Main>
+  return ( 
+    <>
+    <Space></Space>
+      <Main>
         <Head>
           <HeadText>일자</HeadText>
           <HeadText>이메일</HeadText>
@@ -30,6 +32,7 @@ useEffect(()=>{
           ))}
         </BodyWrap>
       </Main>
+    </>
   )
 }
 

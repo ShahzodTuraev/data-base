@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import{Main, Head, HeadText, Body, BodyText, BodyWrap} from '../table/style'
+import{Main, Head, HeadText, Body, BodyText, BodyWrap, Space} from '../table/style'
 const PaymentList = () => {
   const [users, setUsers] = useState([])
+  const category = localStorage.getItem('category')
 
   useEffect(()=>{
-    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {
-    }).then((data)=>{
+    axios.post(`https://api.mever.me:8080/paymentList?email=test@naver.com`, {category}).then((data)=>{
       setUsers(data.data)
     });
   }, [])
-  return (  
-    <Main>
+  return (
+    <>
+    <Space></Space>
+      <Main>
         <Head>
           <HeadText>일자</HeadText>
           <HeadText>이름</HeadText>
@@ -35,6 +37,7 @@ const PaymentList = () => {
           ))}
         </BodyWrap>
       </Main>
+    </>
   )
 }
 

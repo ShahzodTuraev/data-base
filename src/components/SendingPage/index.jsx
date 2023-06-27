@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Btn, Container, Icon, Input, Text, TextArea, Wrap, Select, Alert, HeadWrap } from './style'
 import axios from 'axios'
 
-const SendingPage = ({memberList, setClose, emailIndex, setUserIndex, checkedUsers}) => {
+const SendingPage = ({memberList, setClose, checkedUsers}) => {
   const [select, setSelect] = useState('')
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
@@ -14,14 +14,15 @@ const SendingPage = ({memberList, setClose, emailIndex, setUserIndex, checkedUse
   const alfa = data.map((val)=>({ala: val.email}))
   const onClose =()=>{
     setClose(false)
-    setUserIndex('')
-    console.log(alfa);
+    // setUserIndex('')
   }
   const onChange =(setState)=> (e) =>{
     setState(e.target.value)
   }
   const onSubmit =()=>{
     if(select.length > 0 && title.length >0 && content.length > 0){
+      setClose(false)
+      alert('완료되었습니다')
       axios.post('https://api.mever.me:8080/send/reservation/mail', 
       data.map((val)=>({
         email: val.email,

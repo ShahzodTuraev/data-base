@@ -6,18 +6,25 @@ import SendingPage from './SendingPage';
 const MemberList = () => {
   const [memberList, setMemberList] = useState([]);
   const [selectUser, setSelectUser] = useState()
-  const [selectEmail, setSelectEmail] = useState()
+  // const [selectEmail, setSelectEmail] = useState()
   const [uniquePage, setUniquePage] = useState(false)
   const [inputEmail, setInputEmail] = useState('')
   const [inputPhone, setInputPhone] = useState('')
   const [sendingPage, setSendingPage] = useState(false)
-  const [indexEmail, setIndexEmail] = useState()
+  // const [indexEmail, setIndexEmail] = useState()
   const [checkedUsers, setCheckedUsers] = useState([])
+  const category = localStorage.getItem('category');
   const checkedArr =[]
   // MEMBER DATA :
   useEffect(()=>{
-    axios.post('https://api.mever.me:8080/member/list', {
-    }).then((data)=>{
+    axios
+    .post('https://api.mever.me:8080/member/list', null, {
+      params: {
+        email: '',
+        category: category,
+      },
+    })
+    .then((data)=>{
       setMemberList(data.data)
     });
   }, [])
@@ -32,11 +39,11 @@ const onSubscribe = (index) => {
 
 }
 // SEND EMAIL BTN FUNCTION:
-const onSendEmail = (index) => {
-  setSelectEmail(index)
-  setSendingPage(true)
-  setIndexEmail(index)
-}
+// const onSendEmail = (index) => {
+//   setSelectEmail(index)
+//   setSendingPage(true)
+//   setIndexEmail(index)
+// }
 
 // UNIQUE PAGE DATA :
 
@@ -60,43 +67,43 @@ const onCheck =(index) => {
 // console.log(checkedUsers);
 
 const onSendList = () => {
-  console.log(checkedArr);
-  setSendingPage(true)
-  setCheckedUsers(checkedArr)
+  if(checkedArr.length>0){
+    setCheckedUsers(checkedArr)
+    setSendingPage(true)
+  }else{alert('먼저 사용자를 선택하세요!')}
 }
 return (
   <>
-      <Btn onClick={onSendList}>Send List</Btn>
+      <Btn  onClick={onSendList}>이메일 보내기</Btn>
     <Main>
         <Head>
-          <HeadText>선택</HeadText>
+          <HeadText flex='.4'>선택</HeadText>
           <HeadText>일자</HeadText>
           <HeadText>이름</HeadText>
           <HeadText>이메일</HeadText>
           <HeadText>전화번호</HeadText>
-          <HeadText>설문 조사 결과</HeadText>
-          <HeadText>내용</HeadText>
-          <HeadText>이메일</HeadText>
+          <HeadText flex='1.6'>설문 조사 결과</HeadText>
+          <HeadText flex='.9'>내용</HeadText>
         </Head>
         <BodyWrap>
           {memberList.map((list, index)=>(
             <Body key={index} style={index % 2 === 0 ? {background: 'rgba(0, 0, 0, 0.05)'} : {background: 'white'}}>
-              <BodyText>
-                <input type="checkbox" onChange={()=>{onCheck(index)}}/>
-              </BodyText> <BodyText>2023-05-15 13:45</BodyText>
+              <BodyText flex='.4'>
+                <input style={{width: '20px', height: '20px', cursor: 'pointer'}} type="checkbox" onChange={()=>{onCheck(index)}}/>
+              </BodyText> 
+              <BodyText>{list.regdate}</BodyText>
               <BodyText>{list.name}</BodyText>
               <BodyText>{list.email}</BodyText>
               <BodyText>{list.phone}</BodyText>
-              <BodyText>{list.dcrp}</BodyText>
-              <BodyText><Btn style={index === selectUser ? {background: 'coral', color: '#000'} : {border: 'none'}} onClick={()=>{onSubscribe(index)}}>구독 정보</Btn></BodyText>
-              <BodyText><Btn style={index === selectEmail ? {background: 'coral', color: '#000'} : {border: 'none'}} onClick={()=>{onSendEmail(index)}}>이메일 예약</Btn></BodyText>
+              <BodyText flex='1.6'>{list.dcrp}</BodyText>
+              <BodyText flex='.9'><Btn style={index === selectUser ? {background: 'coral', color: '#000', margin: '0'} : {border: 'none', margin: '0'}} onClick={()=>{onSubscribe(index)}}>구독 정보</Btn></BodyText>
               
             </Body>
           ))}
         </BodyWrap>
       </Main>
       {uniquePage && <SubscripPage uniqueData = {uniqueData} userIndex ={selectUser} setClose ={setUniquePage}/>}
-      {sendingPage && <SendingPage memberList = {memberList} emailIndex ={indexEmail} setClose ={setSendingPage} setUserIndex ={setSelectEmail} checkedUsers = {checkedUsers}/>}
+      {sendingPage && <SendingPage memberList = {memberList} setClose ={setSendingPage}  checkedUsers = {checkedUsers}/>}
     </>  
       
   )

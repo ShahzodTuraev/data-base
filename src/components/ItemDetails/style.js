@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {ReactComponent as check} from '../../assets/icons/close-icon.svg'
-import {device} from '../../responsive'
+import device from "../../responsive";
 
 const Container = styled.div`
   position: fixed;
@@ -11,16 +11,16 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  width: 500px;
-  height:660px;
+  width: 30vw;
+  height: 60vh;
   background: #0E3B68;
   border-radius: 15px;
   color: #fff;
   padding: 20px 0px;
   @media ${device.mobile}{
-    width: 370px;
-    padding: 10px 0;
-    height: 600px;
+    top: 50%;
+    width: 95%;
+    height: 80vh;
   }
 `;
 const Wrap = styled.div`
@@ -57,7 +57,7 @@ const Input = styled.input`
 `
 const TextArea = styled.textarea`
   width: 90%;
-  height: 16em;
+  height: 7em;
   resize: none;
   border: none;
   outline: none;
@@ -78,9 +78,6 @@ const Btn = styled.div`
   align-items: center;
   cursor: pointer;
   margin-top: 30px;
-  @media ${device.mobile}{
-    margin-top: 10px;
-  }
 `;
 const Select = styled.select`
   height: 30px;
