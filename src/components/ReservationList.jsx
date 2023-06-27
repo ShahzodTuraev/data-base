@@ -10,6 +10,7 @@ const ReservationList = () => {
   const [events, setEvents] = useState([]);
   const category = localStorage.getItem('category');
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [updatedReservationTime, setUpdatedReservationTime] = useState('');
 
   useEffect(() => {
     fetchEvents();
@@ -27,7 +28,6 @@ const ReservationList = () => {
         status: reservation.status || 'Pending',
         extendedProps: reservation,
       }));
-      // 서버에서 받아온 예약 데이터를 events 상태로 설정
       setEvents(formattedEvents);
       console.log(formattedEvents);
     } catch (error) {
@@ -80,7 +80,15 @@ const ReservationList = () => {
     fetchEvents();
     setSelectedEvent(null);
   };
-
+  const handleUpdateReservation = async () => {
+    
+  };
+  const handleUpdateButtonClick = () => {
+    // 수정할 예약 정보를 설정합니다.
+    // 예약 정보를 상태에 업데이트하거나 필요한 동작을 수행합니다.
+    // 예를 들어, 팝업 내에 있는 예약 정보를 수정할 수 있습니다.
+    setUpdatedReservationTime(selectedEvent.start && selectedEvent.start.toLocaleString());
+  };
   return (
     <CalendarContainer>
       <FullCalendar
@@ -111,9 +119,10 @@ const ReservationList = () => {
           <h3>예약 정보</h3>
           <p>예약일시: {selectedEvent.start && selectedEvent.start.toLocaleString()}</p>
           <p>상품정보: {selectedEvent.title}</p>
-          <p>고객: {selectedEvent.extendedProps.email && selectedEvent.extendedProps.email.toString()}</p>
+          <p>고객3: {selectedEvent.extendedProps.email && selectedEvent.extendedProps.email.toString()}</p>
           <Button onClick={handleConfirmReservation}>예약확정</Button>
           <Button onClick={handleCancelReservation}>예약취소</Button>
+          <Button onClick={handleUpdateReservation}>예약수정</Button>
         </Popup>
       )}
     </CalendarContainer>
